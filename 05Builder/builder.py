@@ -10,9 +10,6 @@ from abc import ABCMeta, abstractmethod
 
 
 class Builder(metaclass=ABCMeta):
-    def __init__(self):
-        self.constructed_object = None
-
     @abstractmethod
     def add_text_field(self, field_dict):
         pass

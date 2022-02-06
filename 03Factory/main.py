@@ -9,16 +9,16 @@
 参数传入，又不是标准的工厂方法的样子，TODO: 如何处理
 2、TODO: 如果工厂要创建的产品数量很多，就要创建很多个工厂，有没有好的解决方法
 3、Circle、Square都是工厂要创建的产品，用户理应不能自己创建它们，所以它们的构造方法应该为私有，但这里用户完全可以直接创建一个Square对象，
-甚至可以调用Square.factory('square')，和Shape.factory('square')效果相同，TODO: 如何解决该问题
+甚至可以调用Square.factory('square')，和Shape.factory('square')效果相同，为了解决该问题，产品的实现和工厂方法不应在一个类中，改进
+见shapes_new.py
 """
 import pygame
 
 from shapes import Shape
+from shapes_new import ShapeFactory
 
-if __name__ == '__main__':
-    circle = Shape.factory('circle')
-    square = Shape.factory('square')
 
+def draw_shapes(circle, square):
     if_quits = False
 
     while not if_quits:
@@ -31,3 +31,22 @@ if __name__ == '__main__':
             if pressed_key[pygame.K_c]:
                 circle.draw()
             pygame.display.flip()
+
+
+# 该实现把工厂方法实现在了Shape类内部，存在职责不单一、容易误调用等问题
+def shapes_test():
+    circle = Shape.factory('circle')
+    square = Shape.factory('square')
+
+    draw_shapes(circle, square)
+
+
+def shapes_new_test():
+    circle = ShapeFactory.build('circle')
+    square = ShapeFactory.build('square')
+
+    draw_shapes(circle, square)
+
+
+if __name__ == '__main__':
+    shapes_new_test()

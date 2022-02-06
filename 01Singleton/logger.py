@@ -42,4 +42,5 @@ class Logger:
     def __init__(self, file_name, val):
         self.file_name = file_name
         self.val = val
+        # 模拟创建慢的对象
         time.sleep(1)
